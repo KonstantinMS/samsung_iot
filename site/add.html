@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="myCSS.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+  <!-- mqtt   -->
+  <script src="myMQTT.js"></script> <!-- mqtt   -->
+  <script src="addRow.js"></script> <!-- добавить сточку   -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript" src="html2csvtoHTML.js"></script>
+  <script type="text/javascript" src="html2csv.js"></script>
+</head>
+
+<body>
+  
+    <h1>Чипосчет</h1> 
+  <h2>Добавление комопнентов в базу</h2>
+  <!-- <div type="text" id="clientID">Клиент: </div>-->
+
+
+
+  <!-- Кнопки<input type="button" class="bigbutton" onclick="btn_add_row()" value="ADD NEW ROW"/>
+        -->
+
+
+
+  <!-- Форма ввода компонент-->
+  <form action="" name = "add_components" id="add_components" method="POST" onsubmit="addRow();return false;">
+    <fieldset>
+      <legend>Добавить компонент</legend>
+      <div class="col-25">
+        <label for="name">Тип</label>
+      </div>
+      <div class="col-75">
+        <select name="typeList" id="type">
+          <option value="Конденсатор">Конденсатор</option>
+          <option value="Резистор">Резистор</option>
+          <option value="Микросхема">Микросхема</option>
+        </select>
+      </div>
+
+      <div class="col-25">
+        <label for="name">Наименование / Артикул</label>
+      </div>
+      <div class="col-37-5">
+        <input type="text" name="name" id="name" value="" size="12" tabindex="2" placeholder="0402 19.6 кОм 5%"/>
+      </div>
+      <div class="col-37-5">
+        <input type="text" name="code" id="code" value="" size="12" tabindex="3" placeholder="RC0402JR-0719K6L"/>
+      </div>
+
+      <div class="col-25">
+        <label for="place">Место</label>
+      </div>
+      <div class="col-37-5">
+        <select name="storage" id="storage">
+          <option value="Главный склад">Главный склад</option>
+          <option value="Рабочее место">Рабочее место</option>
+        </select>
+      </div>
+        <div class="col-37-5">
+        <select name="place" id="place">
+          <option value="Ящик 0603">Ящик 0603</option>
+          <option value="Ящик 0402">Ящик 0402</option>
+          <option value="Ящик 0201">Ящик 0201</option>
+        </select>
+        </div>
+      </div>
+      <div class="col-25">
+        <label for="factor">Множитель / Проекты</label>
+      </div>
+      <div class="col-37-5">
+        <input type="text" name="factor" id="factor" value="2" size="12" tabindex="5" />
+      </div>
+      <div class="col-37-5">
+        <select name="project" id="project">
+          <option value="ПО315Д">Чипосчет</option>
+          <option value="ПО315Д">ПО315Д</option>
+          <option value="ПТТ">ПТТ</option>
+          <option value="ЛДМ">ЛДМ</option>
+        </select>
+      </div>
+     
+      <div class="col-25">
+          <label for="name">Число отверстий / Метка</label>
+        </div>
+        <div class="col-37-5">
+          <input type="text" name="count" id="count" value="" size="12" tabindex="6" placeholder="Введите вручную или приложите RFID"/>
+        </div>
+        <div class="col-37-5">
+          <input type="text" name="label" id="label" value="" size="12" tabindex="7" placeholder="Введите вручную или приложите RFID"/>
+        </div>
+
+
+      <div class="col-25">
+        <label for="subm"></label>
+        <input type="submit" name="subm" class="bigbutton" value="Добавить новый компонент" tabindex="6" />
+      </div>
+       <!--  <div class="col-75" type="text" id="componentNum">Число компонент</div> -->
+
+
+
+    </fieldset>
+  </form>
+
+
+
+  <!-- Таблица-->
+  <table id="tab1" class="sortable">
+    <colgroup>
+      <col span="8" style="background:Khaki">
+      <!-- С помощью этой конструкции задаем цвет фона для первых двух столбцов таблицы-->
+      <col span="2" style="background-color:#37768f"><!-- Задаем цвет фона для следующего (одного) столбца таблицы-->
+
+    </colgroup>
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Тип</th>
+        <th>Наименование</th>
+        <th>Артикул</th>
+        <th>Склад</th>
+        <th>Место хранения</th>
+        <th>Множитель</th>
+        <th>Проекты</th>
+        <th>Метка</th>
+        <th>Количество</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <br>
+  <center>
+    <a href="index.html"class="button">На главную</a>
+    <a href="load.php"class="button">Посмотреть базу</a>
+    <a href="find.html"class="button"">Поиск</a>
+    <a href="#" id="xx"class="button">Скачать таблицу в csv формате</a>
+    <input value="Экспортировать в формате CSV в новое окно" type="button" class="button" onclick="$('#tab1').table2CSV()">
+  </center>
+</body>
+
+</html>
+
